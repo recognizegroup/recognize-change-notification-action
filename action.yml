@@ -1,0 +1,49 @@
+name: 'Recognize Change Notification Action'
+description: 'Get notified when a specific file is changed.'
+inputs:
+    notification-type:
+        description: 'Type of notification. Currently, only email is supported.'
+        required: true
+        default: 'email'
+    path:
+        description: 'File or directory to track for changes.'
+        required: true
+    mail-connection-url:
+        description: 'Mail connection URL (smtp+starttls://user:password@server:port, smtp://user:password@server:port).'
+        required: true
+    mail-subject:
+        description: 'Subject of the mail that will be send upon a change.'
+        required: true
+    mail-from:
+        description: 'From which mail address the notification will be sent.'
+        required: true
+    mail-to:
+        description: 'The mail addresses that should receive the notification (separated by a comma).'
+        required: true
+
+runs:
+    using: 'composite'
+    steps:
+        - uses: actions/checkout@v3
+          name: Checkout files
+          with:
+              fetch-depth: 0
+        - name: Get changed files
+          id: changed-files
+          uses: tj-actions/changed-files@v3
+          with:
+              separator: ','
+        - name: Send email notification
+          if: ${{ contains(inputs.path, steps.changed-files.outputs.all_changed_files) && inputs.notification-type == 'email' }}
+          uses: dawidd6/action-send-mail@v3
+          with:
+              connection_url: ${{ inputs.mail-connection-url }}
+              subject: ${{ inputs.mail-subject }}
+              from: ${{ inputs.mail-from }}
+              to: ${{ inputs.mail-to }}
+              body: |-
+                  # ${{ inputs.mail-subject }}
+                  The path ${{ inputs.path }} has been changed. To see the changes, please visit the following link:
+                  [${{ github.event.repository.html_url }}/commit/${{ github.sha }}](${{ github.event.repository.html_url }}/commit/${{ github.sha }})
+              convert_markdown: true
+
