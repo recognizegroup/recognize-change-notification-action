@@ -13,5 +13,6 @@ jobs:
           path: .github/workflows/run.yaml
           mail-connection-url: ${{ secrets.SMTP_CONNECTION_STRING }}
           mail-subject: File Changed
-          mail-from: info@recognize.nl
+          mail-from-name: Recognize Mailer
+          mail-from-address: info@recognize.nl
           mail-to: b.wesselink@recognize.nl
