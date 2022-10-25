@@ -42,10 +42,9 @@ runs:
               subject: ${{ inputs.mail-subject }}
               from: ${{ format('{0} <{1}>', inputs.mail-from-name, inputs.mail-from-address) }}
               to: ${{ inputs.mail-to }}
-              body: |-
+              html_body: |-
                   # ${{ inputs.mail-subject }}
                   The path ${{ inputs.path }} has been changed. To see the changes, please visit the following link:
                   [${{ github.event.repository.html_url }}/commit/${{ github.sha }}](${{ github.event.repository.html_url }}/commit/${{ github.sha }})
               convert_markdown: true
-              content_type: text/html
 
