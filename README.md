@@ -21,6 +21,7 @@ jobs:
           path: src/file # The path to the file or directory that should be checked for changes
           mail-connection-url: ${{ secrets.SMTP_CONNECTION_STRING }} # The connection string to use to send the email (smtp+starttls://user:password@server:port, smtp://user:password@server:port)
           mail-subject: File Changed # The subject of the email
-          mail-from: info@example.com # The from address of the email
+          mail-from-name: Example # The from name of the email
+          mail-from-address: info@example.com # The from address of the email
           mail-to: info@example.com, admin@example.com # The to address of the email, separated by commas
 ```

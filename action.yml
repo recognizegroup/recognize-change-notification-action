@@ -14,7 +14,10 @@ inputs:
     mail-subject:
         description: 'Subject of the mail that will be send upon a change.'
         required: true
-    mail-from:
+    mail-from-name:
+        description: 'The name of the sender from which the notification will be sent.'
+        required: true
+    mail-from-address:
         description: 'From which mail address the notification will be sent.'
         required: true
     mail-to:
@@ -37,11 +40,12 @@ runs:
           with:
               connection_url: ${{ inputs.mail-connection-url }}
               subject: ${{ inputs.mail-subject }}
-              from: ${{ inputs.mail-from }}
+              from: ${{ format('{0} <{1}>', inputs.mail-from-name, inputs.mail-from-address) }}
               to: ${{ inputs.mail-to }}
               body: |-
                   # ${{ inputs.mail-subject }}
                   The path ${{ inputs.path }} has been changed. To see the changes, please visit the following link:
                   [${{ github.event.repository.html_url }}/commit/${{ github.sha }}](${{ github.event.repository.html_url }}/commit/${{ github.sha }})
               convert_markdown: true
+              content_type: text/html
 
