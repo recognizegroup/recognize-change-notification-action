@@ -1,0 +1,17 @@
+on:
+  push:
+    branches:
+      - feature/self-test
+
+jobs:
+  check-changes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: recognizegroup/recognize-change-notification-action@v1
+        with:
+          notification-type: email
+          path: .github/workflows/run.yaml
+          mail-connection-url: ${{ secrets.SMTP_CONNECTION_STRING }} # The connection string to use to send the email (smtp+starttls://user:password@server:port, smtp://user:password@server:port)
+          mail-subject: File Changed
+          mail-from: info@recognize.nl
+          mail-to: b.wesselink@recognize.nl
