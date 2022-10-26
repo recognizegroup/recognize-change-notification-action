@@ -10,7 +10,7 @@ jobs:
       - uses: recognizegroup/recognize-change-notification-action@v1
         with:
           notification-type: email
-          path: .github/workflows/run.yaml
+          path: Fiberworkz.Database/Migrations/FiberworkzDbContextModelSnapshot.cs
           mail-connection-url: ${{ secrets.SMTP_CONNECTION_STRING }}
           mail-subject: File Changed
           mail-from-name: Recognize Mailer
