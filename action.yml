@@ -34,8 +34,10 @@ runs:
         - name: Get changed files
           id: changed-files
           uses: jitterbit/get-changed-files@v1
+          with:
+              format: json
         - name: Send email notification
-          if: ${{ contains(steps.changed-files.outputs.all, inputs.path) && inputs.notification-type == 'email' }}
+          if: ${{ contains(steps.changed-files.outputs.all, format('"{0}', inputs.path)) && inputs.notification-type == 'email' }}
           uses: dawidd6/action-send-mail@v3
           with:
               connection_url: ${{ inputs.mail-connection-url }}
